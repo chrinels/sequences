@@ -85,9 +85,8 @@ class GoldSequence:
 def write_seq_to_file(filename, seq):
     try:
         fid = open(filename, mode="wt", encoding="utf-8", newline="\n")
-        fid.write("TEXTU\n")
         for i in seq:
-            fid.write("{:.4f},{:.4f}\n".format(float(i), float(i)))
+            fid.write("{},{}\n".format(np.int16(i), np.int16(i)))
         fid.close()
     except OSError as er:
         print(er)
