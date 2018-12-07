@@ -23,4 +23,4 @@ python3 gold.py
 
 [Wikipedia: Maximum Length Sequences (MLS)](https://en.wikipedia.org/wiki/Maximum_length_sequence)
 
-[NewWaveInstruments](http://www.newwaveinstruments.com/resources/articles/m_sequence_linear_feedback_shift_register_lfsr.htm#Galois%20Field%20Mathematics%20and%20M-Sequences)
+[NewWaveInstruments (WebArchive)](http://web.archive.org/web/20180419035811/http://www.newwaveinstruments.com/resources/articles/m_sequence_linear_feedback_shift_register_lfsr.htm)
