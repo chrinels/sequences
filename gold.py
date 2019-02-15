@@ -94,23 +94,21 @@ def write_seq_to_file(filename, seq):
 
 
 if __name__ == "__main__":
-    init = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+    init = [0, 0, 0, 0, 0, 0, 0, 1]
 
-    poly1 = [12, 10, 5, 4, 0]
-    poly2 = [12,  8, 6, 5, 0]
+    # poly1 = [8, 7, 6, 1, 0]
+    # poly2 = [8, 7, 5, 3, 0]
+    # poly1 = [10, 8, 7, 2, 0]
+    # poly2 = [10, 8, 5, 4, 0]
+    # poly1 = [9, 7, 5, 2, 0]
+    # poly2 = [9, 6, 5, 3, 0]
+    poly1 = [8, 6, 5, 3, 0]
+    poly2 = [8, 6, 5, 2, 0]
+    frame_length = 2**len(init) - 1     # Maximum length before the code repeats itself.
 
-    gold = GoldSequence(poly1, init,
-                        poly2, init,
-                        samples_per_frame=2**len(init)-1, index=0, matlab=True, debug=False)
+    gold = GoldSequence(poly1, init, poly2, init,
+                        samples_per_frame=frame_length, index=0, matlab=True, debug=False)
 
-    # Map (0, 1) -> (-1, 1) -> (-2047, 2047)
-    gold_sequence = (2 * np.array(gold.step()) - 1)  # * (2**11-1)
+    gold_sequence = (2 * np.array(gold.step()) - 1)
 
     write_seq_to_file("goldseq.txt", gold_sequence)
-
-    if False:
-        mls_1 = LFSR(poly1, init, samples_per_frame=2 ** len(init) - 1, matlab=True)
-        mls_2 = LFSR(poly2, init, samples_per_frame=2 ** len(init) - 1, matlab=True)
-
-        write_seq_to_file("mls1.txt", mls_1.step())
-        write_seq_to_file("mls2.txt", mls_2.step())
