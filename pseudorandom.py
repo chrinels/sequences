@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import numpy as np
-
+from math import gcd
 
 class LFSR:
 
@@ -82,11 +82,34 @@ class GoldSequence:
         self.mls2.reset()
 
 
-def write_seq_to_file(filename, seq):
+class ZadoffChu:
+
+    def __init__(self, n_zc, u, q=0):
+        self.n_zc = n_zc
+        self.u = u
+        self._check_parameter_requirements()
+
+        self.cf = n_zc % 2
+        self.q = q
+
+    def _check_parameter_requirements(self):
+        if (self.u < 0) or (self.u > self.n_zc):
+            raise ValueError('"u" must lie in the range: 0 < u < n_zc')
+
+        if gcd(self.n_zc, self.u) is not 1:
+            raise ValueError("gcd(n_zc, u) is not 1. u and n_zc most be coprime.")
+
+    def generate(self):
+        n = np.array(range(self.n_zc))
+        return np.exp( -1j*np.pi*self.u*n*(n + self.cf + 2*self.q) / self.n_zc )
+
+
+def write_seq_to_file(filename, seq, dt='complex'):
+    seq = np.array(seq, dtype=dt)
     try:
         fid = open(filename, mode="wt", encoding="utf-8", newline="\n")
         for i in seq:
-            fid.write("{},{}\n".format(np.int16(i), np.int16(i)))
+            fid.write("{},{}\n".format(np.real(i), np.imag(i)))
         fid.close()
     except OSError as er:
         print(er)
@@ -94,21 +117,22 @@ def write_seq_to_file(filename, seq):
 
 
 if __name__ == "__main__":
+
+    # Gold sequence
     init = [0, 0, 0, 0, 0, 0, 0, 1]
 
-    # poly1 = [8, 7, 6, 1, 0]
-    # poly2 = [8, 7, 5, 3, 0]
-    # poly1 = [10, 8, 7, 2, 0]
-    # poly2 = [10, 8, 5, 4, 0]
-    # poly1 = [9, 7, 5, 2, 0]
-    # poly2 = [9, 6, 5, 3, 0]
     poly1 = [8, 6, 5, 3, 0]
     poly2 = [8, 6, 5, 2, 0]
     frame_length = 2**len(init) - 1     # Maximum length before the code repeats itself.
 
     gold = GoldSequence(poly1, init, poly2, init,
                         samples_per_frame=frame_length, index=0, matlab=True, debug=False)
-
     gold_sequence = (2 * np.array(gold.step()) - 1)
 
-    write_seq_to_file("goldseq.txt", gold_sequence)
+    # Zadoff-Chu waveform
+    zc = ZadoffChu(1353, 7, 1)
+    chu = zc.generate()
+
+    # Write sequences to file(s)
+    write_seq_to_file("goldseq.txt", gold_sequence, dt='int16')     # int16 is for the FMCOMMS3-board.
+    write_seq_to_file("chu.txt", chu, dt='complex')
