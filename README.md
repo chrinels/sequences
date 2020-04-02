@@ -1,15 +1,25 @@
-# Gold sequences
+# Sequences
+
+- Linear Feedback Shift Register, LFSR. The Fibonacci Implementation.
+- Gold sequence (constructed with 2 maximum length sequences (MLS) LFSR).
+- Zadoff-Chu
 
 
-## "Install" and Dependencies
+## Setup
 IF you whish to work in a virtual environment, run
+```sh
+VENV=$HOME/VirtualEnvironments/sequences
+
+python3 -m venv $VENV
+source $VENV/bin/activate
+
+pip3 install -U pip
+pip3 install -U -r requirements.txt
 ```
-source setup.sh
-```
-Will create a python3 venv environment in your home-folder, in $HOME/.virtualenvs/gold-sequence.
+Will create a python3 venv environment in your home-folder, in $HOME/VirtualEnvironments/sequences.
 It will also download numpy.
 
-Else, you will need python3 and numpy.
+Else, if you don't whish to use venv you will need python3 and numpy.
 
 ## Run
 ```
