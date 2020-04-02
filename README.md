@@ -13,7 +13,7 @@ Else, you will need python3 and numpy.
 
 ## Run
 ```
-python3 gold.py
+python3 sequences/Gold.py
 ```
 
 ## Ref

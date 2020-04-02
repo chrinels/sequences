@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 
-VENV=$HOME/.virtualenvs/gold-sequence
+VENV=$HOME/VirtualEnvironments/gold-sequence
 
 python3 -m venv $VENV
 source $VENV/bin/activate
