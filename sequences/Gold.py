@@ -1,6 +1,6 @@
 import numpy as np
 
-from sequences import LFSR
+from sequences.LFSR import LFSR
 
 __all__ = ["Gold"]
 
